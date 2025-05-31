@@ -1,0 +1,11 @@
+<h1>Weather Forecast</h1>
+
+<div *ngIf="loading">Loading...</div>
+
+<ul *ngIf="!loading">
+  <li *ngFor="let item of forecasts">
+    <strong>{{ item.date }}</strong> —
+    {{ item.summary }} —
+    {{ item.temperatureC }}°C ({{ item.temperatureF }}°F)
+  </li>
+</ul>
