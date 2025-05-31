@@ -1,0 +1,79 @@
+@import '../../../shared/styles/colors.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.scanner-wrapper {
+    text-align: center;
+    padding: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.scanner-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: $primary-text-color;
+}
+
+.scanner-description {
+    font-size: 0.95rem;
+    color: $secondary-text-color;
+    margin-bottom: 16px;
+}
+
+.scanner-window {
+    width: 90vw;
+    max-width: 400px;
+    height: auto;
+    margin: 0 auto 16px auto;
+    display: block;
+
+    border-radius: 12px;
+    box-shadow: 0 4px 10px $primary-shadow-color;
+    background-color: $primary-color;
+    overflow: hidden;
+}
+
+.no-scanner-info {
+    color: $secondary-text-color;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.scan-result {
+    margin-top: 16px;
+    font-weight: 500;
+    color: $primary-color;
+    word-break: break-all;
+}
+
+.scanner-toggle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    background-color: $primary-color;
+    color: $secondary-text-color;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        background-color: darken($primary-color, 5%);
+    }
+
+    span {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 320px) {
+    .scanner-window {
+        width: 95vw;
+        margin: 15px auto;
+        border-radius: 8px;
+    }
+}
