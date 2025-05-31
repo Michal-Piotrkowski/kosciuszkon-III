@@ -1,5 +1,7 @@
-import {Component, AfterViewInit, createComponent, EnvironmentInjector, inject} from '@angular/core';
+import {Component, AfterViewInit, createComponent, EnvironmentInjector, inject, OnInit} from '@angular/core';
 import {MapPopupComponent} from '../map-popup/map-popup.component';
+import {CollectionPoint} from "../../../app/shared/models/collection-point.model";
+import {CollectionPointService} from "../../../app/shared/services/collection-point.service";
 
 @Component({
   selector: 'app-map',
@@ -8,15 +10,25 @@ import {MapPopupComponent} from '../map-popup/map-popup.component';
   styleUrl: './map.component.scss',
   standalone: true
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnInit {
   private environmentInjector = inject(EnvironmentInjector);
 
-  private punkty = [
-    { lat: 50.0619, lng: 19.9368, opis: 'Kraków1' },
-    { lat: 50.0700, lng: 19.9369, opis: 'Kraków2' },
-    { lat: 50.0500, lng: 19.9361, opis: 'Kraków3' },
-    { lat: 50.0800, lng: 19.9500, opis: 'Kraków4' }
-  ];
+  points: CollectionPoint[] = [];
+
+  constructor(private collectionPointService: CollectionPointService) {}
+
+  ngOnInit() {
+    this.collectionPointService.getAllPoints().subscribe({
+      next: (data) => {
+        this.points = data;
+        this.points.forEach(point => {
+          console.log(`Punkt: lat=${point.latitude}, lng=${point.longitude}, opis=${point.description}`);
+        });
+      },
+      error: (error) => console.error('Błąd podczas pobierania punktów:', error)
+    });
+  }
+
 
   mapExpanded = false;
 
@@ -62,9 +74,9 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
 
-    this.punkty.forEach(punkt => {
+    this.points.forEach(punkt => {
       const popupContent = this.createPopupContent(punkt);
-      L.marker([punkt.lat, punkt.lng], {icon: myIcon})
+      L.marker([punkt.latitude, punkt.longitude], {icon: myIcon})
         .addTo(map)
         .bindPopup(popupContent);
     });
@@ -75,9 +87,9 @@ export class MapComponent implements AfterViewInit {
       environmentInjector: this.environmentInjector
     });
 
-    componentRef.setInput('lat', punkt.lat);
-    componentRef.setInput('lng', punkt.lng);
-    componentRef.setInput('opis', punkt.opis);
+    componentRef.setInput('lat', punkt.latitude);
+    componentRef.setInput('lng', punkt.longitude);
+    componentRef.setInput('opis', punkt.name);
 
     componentRef.changeDetectorRef.detectChanges();
 
