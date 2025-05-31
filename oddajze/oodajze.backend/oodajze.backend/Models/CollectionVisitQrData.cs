@@ -1,0 +1,13 @@
+namespace oodajze.backend.Models;
+
+public class CollectionVisitQrData
+{
+    public string CollectionVisitId { get; set; }
+    public string CollectionPointId { get; set; }
+    public DateTime ScannedAt { get; set; }
+    public int PointsEarned { get; set; }
+    public List<ProductQrData> Products { get; set; } = new List<ProductQrData>();
+
+    public CollectionPoint CollectionPoint { get; set; }
+
+}
