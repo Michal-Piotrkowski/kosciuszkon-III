@@ -13,7 +13,8 @@ public class AppDbContext : DbContext
     public DbSet<CouponTemplate> CouponTemplates { get; set; }
     public DbSet<UserCoupon> UserCoupons { get; set; }
     public DbSet<ProductQrData> ProductQrDatas { get; set; }
-    public DbSet<CollectionVisitQrData> CollectionVisitQrDatas { get; set; }
+    public DbSet<CollectionVisitQrData> CollectionVisitQrData { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,9 +36,10 @@ public class AppDbContext : DbContext
             .HasForeignKey(cv => cv.CollectionPointId);
 
         modelBuilder.Entity<UserCoupon>()
-            .HasOne<CouponTemplate>()
-            .WithMany()
+            .HasOne(uc => uc.CouponTemplate)
+            .WithMany() 
             .HasForeignKey(uc => uc.CouponTemplateId);
+    
     }
 
 }

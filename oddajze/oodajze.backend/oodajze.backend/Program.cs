@@ -3,6 +3,7 @@
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using oodajze.backend.Data;
+using oodajze.backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,11 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ICouponsService, CouponsService>();
+
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -34,6 +40,8 @@ using (var scope = app.Services.CreateScope())
     var seeder = scope.ServiceProvider.GetRequiredService<MockSeeder>();
     await seeder.SeedAsync();
 }
+
+
 
 app.Use(async (context, next) =>
 {
