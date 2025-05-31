@@ -187,7 +187,6 @@ public static class MockData
                         ScannedAt = DateTime.Now.AddDays(-7),
                         PointsEarned = 80,
                         CollectionPoint = collectionPoints[2],
-                        QrCode = "QR987654321",
                         QrCode = Guid.NewGuid().ToString(),
                         Products = new List<ProductQrData>
                         {

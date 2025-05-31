@@ -58,7 +58,7 @@ public class ScanModel : PageModel
            
         };
 
-        await _dbContext.CollectionVisitQrDatas.AddAsync(visit);
+        await _dbContext.CollectionVisitQrData.AddAsync(visit);
         await _dbContext.SaveChangesAsync();
         
         var qrId = visit.QrCode;
