@@ -176,6 +176,10 @@ namespace oodajze.backend.Migrations
                     b.Property<int>("TotalPoints")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");

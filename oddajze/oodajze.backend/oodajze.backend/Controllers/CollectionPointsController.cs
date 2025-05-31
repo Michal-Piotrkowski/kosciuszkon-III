@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace oodajze.backend.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class CollectionPointsController : ControllerBase
 {
