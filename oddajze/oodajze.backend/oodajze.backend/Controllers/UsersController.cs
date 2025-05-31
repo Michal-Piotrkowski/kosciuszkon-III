@@ -1,6 +1,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using oodajze.backend.Dtos;
+using oodajze.backend.Models;
 using oodajze.backend.Services;
 
 namespace oodajze.backend.Controllers;
@@ -29,13 +32,13 @@ public class UsersController : ControllerBase
             return Unauthorized("Invalid user ID");
         }
 
-        var user = _usersService.GetUserById(userId);
-        if (user == null)
+        var userDto = _usersService.GetUserById(userId);
+        if (userDto == null)
         {
             return NotFound("User not found");
         }
 
-        return Ok(user);
+        return Ok(userDto);
     }
 
     [HttpGet("me/coupons")]
@@ -53,11 +56,32 @@ public class UsersController : ControllerBase
         return Ok(coupons);
     }
 
-
     [HttpGet("ranking")]
     public IActionResult GetTopCollectors()
     {
         var topUsers = _usersService.GetTopUsersByPoints();
         return Ok(topUsers);
     }
+    
+    [HttpPost("redeem")]
+    public async Task<int?> RedeemQrCodeAndAddPointsAsync(string qrCode)
+    {
+        var visit = await _context.CollectionVisitQrData
+            .Include(c => c.User)
+            .FirstOrDefaultAsync(c => c.QrCode == qrCode);
+
+        if (visit == null)
+            return null;
+
+        visit.User.TotalPoints += visit.PointsEarned;
+        visit.ScannedAt = DateTime.UtcNow;
+        
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        await _context.SaveChangesAsync();
+
+        return visit.User.TotalPoints;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 using oodajze.backend.Dtos;
 using oodajze.backend.Models;
 using Microsoft.EntityFrameworkCore;
+using oodajze.backend.DTOs;
 
 namespace oodajze.backend.Services;
 
@@ -11,11 +12,6 @@ public class UsersService : IUsersService
     public UsersService(AppDbContext context)
     {
         _context = context;
-    }
-
-    public User? GetUserById(int userId)
-    {
-        return _context.Users.FirstOrDefault(u => u.Id == userId);
     }
 
     public List<UserRankingDto> GetTopUsersByPoints(int count = 10)
@@ -48,4 +44,43 @@ public class UsersService : IUsersService
             })
             .ToList();
     }
+    
+    public UserDto GetUserById(int userId)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+        if (user == null)
+            return null;
+
+        return new UserDto
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Username = user.Username,
+            Email = user.Email,
+            Phone = user.Phone,
+            TotalPoints = user.TotalPoints,
+            JoinDate = user.JoinDate
+        };
+    }
+    
+    public async Task<(bool Success, int NewTotalPoints)> RedeemQrCodeAndAddPointsAsync(string qrCode)
+    {
+        var visit = await _context.CollectionVisitQrData
+            .Include(c => c.User)
+            .FirstOrDefaultAsync(c => c.QrCode == qrCode);
+
+        if (visit == null)
+            return (false, 0);
+        
+        visit.User.TotalPoints += visit.PointsEarned;
+        
+        visit.ScannedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return (true, visit.User.TotalPoints);
+    }
+
 }

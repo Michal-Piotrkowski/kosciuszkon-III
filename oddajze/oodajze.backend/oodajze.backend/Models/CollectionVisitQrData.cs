@@ -9,6 +9,7 @@ public class CollectionVisitQrData
     public int Id { get; set; }
     public int CollectionPointId { get; set; }
     public int UserId { get; set; } 
+    public string QrCode { get; set; }
     public DateTime ScannedAt { get; set; }
     public int PointsEarned { get; set; }
     public List<ProductQrData> Products { get; set; } = new List<ProductQrData>();
