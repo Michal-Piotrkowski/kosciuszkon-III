@@ -23,6 +23,22 @@ public static class MockData
                 Address = "ul. Zielona 5, Kraków",
                 Latitude = 50.0647,
                 Longitude = 19.9450
+            },
+            new CollectionPoint
+            {
+                Name = "Punkt Zbiórki Wrocław",
+                Description = "Zbiórka elektrośmieci i plastików.",
+                Address = "ul. Wrocławska 22, Wrocław",
+                Latitude = 51.1079,
+                Longitude = 17.0385
+            },
+            new CollectionPoint
+            {
+                Name = "Punkt Recyklingu Gdańsk",
+                Description = "Ekologiczny punkt recyklingu.",
+                Address = "ul. Nadmorska 10, Gdańsk",
+                Latitude = 54.3520,
+                Longitude = 18.6466
             }
         };
     }
@@ -46,6 +62,22 @@ public static class MockData
                 PointsRequired = 50,
                 ImageUrl = "https://example.com/coupon2.png",
                 Available = true
+            },
+            new CouponTemplate
+            {
+                Title = "Bezpłatny bilet do kina ekologicznego",
+                Description = "Wykorzystaj punkty na bilet do kina promującego ekologię",
+                PointsRequired = 150,
+                ImageUrl = "https://example.com/coupon3.png",
+                Available = true
+            },
+            new CouponTemplate
+            {
+                Title = "Zniżka 20 zł na zakupy w sklepie zero waste",
+                Description = "Kupon rabatowy na zakupy w sklepie zero waste",
+                PointsRequired = 120,
+                ImageUrl = "https://example.com/coupon4.png",
+                Available = true
             }
         };
     }
@@ -53,6 +85,7 @@ public static class MockData
     public static List<User> GetMockUsers()
     {
         var collectionPoints = GetCollectionPoints();
+        var couponTemplates = GetCouponTemplates();
 
         return new List<User>
         {
@@ -71,7 +104,8 @@ public static class MockData
                     {
                         RedeemedAt = DateTime.Now.AddDays(-5),
                         IsUsed = false,
-                        RedemptionCode = "REDEEM123"
+                        RedemptionCode = "REDEEM123",
+                        CouponTemplateId = 0 // będzie ustawione w seederze
                     }
                 },
                 CollectionVisitQrDataHistory = new List<CollectionVisitQrData>
@@ -116,6 +150,66 @@ public static class MockData
                 PasswordHash = "fakehashedpassword2",
                 TotalPoints = 200,
                 JoinDate = DateTime.Now.AddMonths(-1),
+                RedeemedCoupons = new List<UserCoupon>
+                {
+                    new UserCoupon
+                    {
+                        RedeemedAt = DateTime.Now.AddDays(-10),
+                        IsUsed = true,
+                        RedemptionCode = "REDEEM456",
+                        CouponTemplateId = 1
+                    },
+                    new UserCoupon
+                    {
+                        RedeemedAt = DateTime.Now.AddDays(-1),
+                        IsUsed = false,
+                        RedemptionCode = "REDEEM789",
+                        CouponTemplateId = 2
+                    }
+                },
+                CollectionVisitQrDataHistory = new List<CollectionVisitQrData>
+                {
+                    new CollectionVisitQrData
+                    {
+                        ScannedAt = DateTime.Now.AddDays(-7),
+                        PointsEarned = 80,
+                        CollectionPoint = collectionPoints[2],
+                        Products = new List<ProductQrData>
+                        {
+                            new ProductQrData
+                            {
+                                ProductCode = "BAT123",
+                                Name = "Zużyte baterie",
+                                Description = "Baterie AAA",
+                                BatchNumber = "BCH789",
+                                MaterialType = "Bateria",
+                                RecyclingCode = "5",
+                                Points = 40
+                            },
+                            new ProductQrData
+                            {
+                                ProductCode = "PLAST789",
+                                Name = "Puszka po napoju",
+                                Description = "Aluminiowa puszka",
+                                BatchNumber = "BCH999",
+                                MaterialType = "Metal",
+                                RecyclingCode = "2",
+                                Points = 40
+                            }
+                        }
+                    }
+                }
+            },
+            new User
+            {
+                FirstName = "Marta",
+                LastName = "Kowalska",
+                Phone = "555666777",
+                Email = "marta@example.com",
+                PasswordHash = "fakehashedpassword3",
+                TotalPoints = 80,
+                JoinDate = DateTime.Now.AddMonths(-3),
+                RedeemedCoupons = new List<UserCoupon>(), // jeszcze nie wymieniła kuponów
                 CollectionVisitQrDataHistory = new List<CollectionVisitQrData>()
             }
         };

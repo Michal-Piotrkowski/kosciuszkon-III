@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-using oodajze.backend.Models; // zakładam przestrzeń nazw
+using oodajze.backend.Models; 
 
 public class AppDbContext : DbContext
 {
@@ -26,8 +26,8 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<User>()
             .HasMany(u => u.CollectionVisitQrDataHistory)
-            .WithOne()
-            .HasForeignKey(cv => cv.Id);
+            .WithOne(cv => cv.User)
+            .HasForeignKey(cv => cv.UserId);
 
         modelBuilder.Entity<CollectionVisitQrData>()
             .HasOne(cv => cv.CollectionPoint)
@@ -38,6 +38,6 @@ public class AppDbContext : DbContext
             .HasOne<CouponTemplate>()
             .WithMany()
             .HasForeignKey(uc => uc.CouponTemplateId);
-
     }
+
 }
