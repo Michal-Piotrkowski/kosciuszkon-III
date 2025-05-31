@@ -261,12 +261,12 @@ public static class MockData
         {
             Id = 1,
             CollectionPointId = 1,
-            UserId = users[0].Id,
+            UserId = null,
             QrCode = "QR123456789",
             ScannedAt = DateTime.Now.AddDays(-3),
             PointsEarned = 50,
             CollectionPoint = collectionPoints[0],
-            User = users[0],
+            User = null,
             Products = new List<ProductQrData>
             {
                 new ProductQrData
@@ -295,12 +295,12 @@ public static class MockData
         {
             Id = 2,
             CollectionPointId = 3,
-            UserId = users[1].Id,
+            UserId = null,
             QrCode = "QR987654321",
             ScannedAt = DateTime.Now.AddDays(-7),
             PointsEarned = 80,
             CollectionPoint = collectionPoints[2],
-            User = users[1],
+            User = null,
             Products = new List<ProductQrData>
             {
                 new ProductQrData
@@ -329,12 +329,12 @@ public static class MockData
         {
             Id = 3,
             CollectionPointId = 2,
-            UserId = users[1].Id,
+            UserId = null,
             QrCode = "QRNEW123456",
             ScannedAt = DateTime.Now.AddDays(-2),
             PointsEarned = 60,
             CollectionPoint = collectionPoints[1],
-            User = users[1],
+            User = null,
             Products = new List<ProductQrData>
             {
                 new ProductQrData

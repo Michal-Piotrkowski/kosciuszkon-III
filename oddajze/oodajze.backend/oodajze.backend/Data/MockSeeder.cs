@@ -29,6 +29,28 @@ namespace oodajze.backend.Data
                 await _context.SaveChangesAsync();
             }
             
+            if (!_context.CollectionVisitQrData.Any())
+            {
+                var collectionPoints = _context.CollectionPoints.ToList();
+                var visits = MockData.GetCollectionVisitQrData();
+
+                foreach (var visit in visits)
+                {
+                    var matchedPoint = collectionPoints.FirstOrDefault(p =>
+                        p.Name == visit.CollectionPoint.Name &&
+                        p.Address == visit.CollectionPoint.Address);
+
+                    if (matchedPoint != null)
+                    {
+                        visit.CollectionPointId = matchedPoint.Id;
+                        visit.CollectionPoint = null;
+                    }
+                }
+
+                _context.CollectionVisitQrData.AddRange(visits);
+                await _context.SaveChangesAsync();
+            }
+            
             if (!_context.Users.Any())
             {
                 var users = MockData.GetMockUsers();
