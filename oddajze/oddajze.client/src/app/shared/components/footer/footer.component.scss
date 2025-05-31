@@ -1,12 +1,13 @@
 @import '../../styles/colors.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+$footer-background-color: rgba(230, 230, 230, 0.6);
 
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 1002;
     display: flex;
     justify-content: center;
     padding: 10px 0;
@@ -14,7 +15,7 @@ footer {
     nav {
         width: 90%;
         max-width: 480px;
-        background-color: $primary-color;
+        background-color: $footer-background-color;
         box-shadow: 0 2px 4px $primary-shadow-color;
         border-radius: 30px;
         padding: 12px 0;
