@@ -38,8 +38,23 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
+    [HttpGet("me/coupons")]
+    public IActionResult GetMyActiveCoupons()
+    {
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(userIdString, out int userId))
+        {
+            return Unauthorized("Invalid user ID");
+        }
+
+        var coupons = _usersService.GetActiveCouponsForUser(userId);
+
+        return Ok(coupons);
+    }
+
+
     [HttpGet("ranking")]
-    [AllowAnonymous]
     public IActionResult GetTopCollectors()
     {
         var topUsers = _usersService.GetTopUsersByPoints();

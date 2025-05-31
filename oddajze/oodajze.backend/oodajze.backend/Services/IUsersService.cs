@@ -7,5 +7,6 @@ namespace oodajze.backend.Services
     {
         List<UserRankingDto> GetTopUsersByPoints(int count = 10);
         User? GetUserById(int userId);
+        List<UserCouponDto> GetActiveCouponsForUser(int userId);
     }
 }

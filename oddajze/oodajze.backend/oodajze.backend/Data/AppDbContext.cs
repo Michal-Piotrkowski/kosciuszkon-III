@@ -35,9 +35,10 @@ public class AppDbContext : DbContext
             .HasForeignKey(cv => cv.CollectionPointId);
 
         modelBuilder.Entity<UserCoupon>()
-            .HasOne<CouponTemplate>()
-            .WithMany()
+            .HasOne(uc => uc.CouponTemplate)
+            .WithMany() 
             .HasForeignKey(uc => uc.CouponTemplateId);
+    
     }
 
 }
