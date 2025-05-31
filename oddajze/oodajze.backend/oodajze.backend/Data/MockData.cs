@@ -94,6 +94,7 @@ public static class MockData
                 FirstName = "Anna",
                 LastName = "Nowak",
                 Phone = "123456789",
+                Username = "anowak",
                 Email = "anna@example.com",
                 PasswordHash = "fakehashedpassword1",
                 TotalPoints = 150,
@@ -147,6 +148,7 @@ public static class MockData
                 LastName = "Wiśniewski",
                 Phone = "987654321",
                 Email = "kamil@example.com",
+                Username = "kamilw",
                 PasswordHash = "fakehashedpassword2",
                 TotalPoints = 200,
                 JoinDate = DateTime.Now.AddMonths(-1),
@@ -204,6 +206,7 @@ public static class MockData
             {
                 FirstName = "Marta",
                 LastName = "Kowalska",
+                Username = "martak",
                 Phone = "555666777",
                 Email = "marta@example.com",
                 PasswordHash = "fakehashedpassword3",
