@@ -2,138 +2,122 @@ using oodajze.backend.Models;
 using System;
 using System.Collections.Generic;
 
-namespace YourAppNamespace.Data
+public static class MockSeeder
 {
-    public static class MockSeeder
+    public static List<CollectionPoint> GetCollectionPoints()
     {
-        public static List<CollectionPoint> GetCollectionPoints()
+        return new List<CollectionPoint>
         {
-            return new List<CollectionPoint>
+            new CollectionPoint
             {
-                new CollectionPoint
-                {
-                    Id = "CP1",
-                    Name = "Punkt Ekologiczny Warszawa",
-                    Description = "Punkt zbiórki elektroodpadów.",
-                    Address = "ul. Ekologiczna 12, Warszawa",
-                    Latitude = 52.2297,
-                    Longitude = 21.0122
-                },
-                new CollectionPoint
-                {
-                    Id = "CP2",
-                    Name = "Punkt Recyklingu Kraków",
-                    Description = "Zbieramy plastiki, baterie i sprzęt elektroniczny.",
-                    Address = "ul. Zielona 5, Kraków",
-                    Latitude = 50.0647,
-                    Longitude = 19.9450
-                }
-            };
-        }
+                Name = "Punkt Ekologiczny Warszawa",
+                Description = "Punkt zbiórki elektroodpadów.",
+                Address = "ul. Ekologiczna 12, Warszawa",
+                Latitude = 52.2297,
+                Longitude = 21.0122
+            },
+            new CollectionPoint
+            {
+                Name = "Punkt Recyklingu Kraków",
+                Description = "Zbieramy plastiki, baterie i sprzęt elektroniczny.",
+                Address = "ul. Zielona 5, Kraków",
+                Latitude = 50.0647,
+                Longitude = 19.9450
+            }
+        };
+    }
 
-        public static List<CouponTemplate> GetCouponTemplates()
+    public static List<CouponTemplate> GetCouponTemplates()
+    {
+        return new List<CouponTemplate>
         {
-            return new List<CouponTemplate>
+            new CouponTemplate
             {
-                new CouponTemplate
-                {
-                    Id = "CT1",
-                    Title = "10% zniżki na zakupy w EkoSklep",
-                    Description = "Kupon na zniżkę do wykorzystania w EkoSklep",
-                    PointsRequired = 100,
-                    ImageUrl = "https://example.com/coupon1.png",
-                    Available = true
-                },
-                new CouponTemplate
-                {
-                    Id = "CT2",
-                    Title = "Darmowa torba materiałowa",
-                    Description = "Wymień punkty na torbę eko!",
-                    PointsRequired = 50,
-                    ImageUrl = "https://example.com/coupon2.png",
-                    Available = true
-                }
-            };
-        }
+                Title = "10% zniżki na zakupy w EkoSklep",
+                Description = "Kupon na zniżkę do wykorzystania w EkoSklep",
+                PointsRequired = 100,
+                ImageUrl = "https://example.com/coupon1.png",
+                Available = true
+            },
+            new CouponTemplate
+            {
+                Title = "Darmowa torba materiałowa",
+                Description = "Wymień punkty na torbę eko!",
+                PointsRequired = 50,
+                ImageUrl = "https://example.com/coupon2.png",
+                Available = true
+            }
+        };
+    }
 
-        public static List<User> GetMockUsers()
+    public static List<User> GetMockUsers()
+    {
+        var collectionPoints = GetCollectionPoints();
+
+        return new List<User>
         {
-            var collectionPoints = GetCollectionPoints();
-
-            return new List<User>
+            new User
             {
-                new User
+                FirstName = "Anna",
+                LastName = "Nowak",
+                Phone = "123456789",
+                Email = "anna@example.com",
+                PasswordHash = "fakehashedpassword1",
+                TotalPoints = 150,
+                JoinDate = DateTime.Now.AddMonths(-2),
+                RedeemedCoupons = new List<UserCoupon>
                 {
-                    Id = "U1",
-                    FirstName = "Anna",
-                    LastName = "Nowak",
-                    Phone = "123456789",
-                    Email = "anna@example.com",
-                    PasswordHash = "fakehashedpassword1", // na potrzeby mocka
-                    TotalPoints = 150,
-                    JoinDate = DateTime.Now.AddMonths(-2),
-                    RedeemedCoupons = new List<UserCoupon>
+                    new UserCoupon
                     {
-                        new UserCoupon
-                        {
-                            Id = "UC1",
-                            UserId = "U1",
-                            CouponTemplateId = "CT2",
-                            RedeemedAt = DateTime.Now.AddDays(-5),
-                            IsUsed = false,
-                            RedemptionCode = "REDEEM123"
-                        }
-                    },
-                    CollectionVisitQrDataHistory = new List<CollectionVisitQrData>
+                        RedeemedAt = DateTime.Now.AddDays(-5),
+                        IsUsed = false,
+                        RedemptionCode = "REDEEM123"
+                    }
+                },
+                CollectionVisitQrDataHistory = new List<CollectionVisitQrData>
+                {
+                    new CollectionVisitQrData
                     {
-                        new CollectionVisitQrData
+                        ScannedAt = DateTime.Now.AddDays(-3),
+                        PointsEarned = 50,
+                        CollectionPoint = collectionPoints[0],
+                        Products = new List<ProductQrData>
                         {
-                            CollectionVisitId = "CV1",
-                            CollectionPointId = "CP1",
-                            ScannedAt = DateTime.Now.AddDays(-3),
-                            PointsEarned = 50,
-                            CollectionPoint = collectionPoints[0],
-                            Products = new List<ProductQrData>
+                            new ProductQrData
                             {
-                                new ProductQrData
-                                {
-                                    ProductId = "P1",
-                                    ProductCode = "PLAST123",
-                                    Name = "Butelka PET",
-                                    Description = "Plastikowa butelka 1.5L",
-                                    BatchNumber = "BCH123",
-                                    MaterialType = "Plastik",
-                                    RecyclingCode = "1",
-                                    Points = 25
-                                },
-                                new ProductQrData
-                                {
-                                    ProductId = "P2",
-                                    ProductCode = "ELEC456",
-                                    Name = "Stary telefon",
-                                    Description = "Zepsuty telefon komórkowy",
-                                    BatchNumber = "BCH456",
-                                    MaterialType = "Elektronika",
-                                    RecyclingCode = "4",
-                                    Points = 25
-                                }
+                                ProductCode = "PLAST123",
+                                Name = "Butelka PET",
+                                Description = "Plastikowa butelka 1.5L",
+                                BatchNumber = "BCH123",
+                                MaterialType = "Plastik",
+                                RecyclingCode = "1",
+                                Points = 25
+                            },
+                            new ProductQrData
+                            {
+                                ProductCode = "ELEC456",
+                                Name = "Stary telefon",
+                                Description = "Zepsuty telefon komórkowy",
+                                BatchNumber = "BCH456",
+                                MaterialType = "Elektronika",
+                                RecyclingCode = "4",
+                                Points = 25
                             }
                         }
                     }
-                },
-                new User
-                {
-                    Id = "U2",
-                    FirstName = "Kamil",
-                    LastName = "Wiśniewski",
-                    Phone = "987654321",
-                    Email = "kamil@example.com",
-                    PasswordHash = "fakehashedpassword2", // na potrzeby mocka
-                    TotalPoints = 200,
-                    JoinDate = DateTime.Now.AddMonths(-1),
-                    CollectionVisitQrDataHistory = new List<CollectionVisitQrData>()
                 }
-            };
-        }
+            },
+            new User
+            {
+                FirstName = "Kamil",
+                LastName = "Wiśniewski",
+                Phone = "987654321",
+                Email = "kamil@example.com",
+                PasswordHash = "fakehashedpassword2",
+                TotalPoints = 200,
+                JoinDate = DateTime.Now.AddMonths(-1),
+                CollectionVisitQrDataHistory = new List<CollectionVisitQrData>()
+            }
+        };
     }
 }

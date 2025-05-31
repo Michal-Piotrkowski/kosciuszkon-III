@@ -27,7 +27,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(u => u.CollectionVisitQrDataHistory)
             .WithOne()
-            .HasForeignKey(cv => cv.CollectionVisitId);
+            .HasForeignKey(cv => cv.Id);
 
         modelBuilder.Entity<CollectionVisitQrData>()
             .HasOne(cv => cv.CollectionPoint)
