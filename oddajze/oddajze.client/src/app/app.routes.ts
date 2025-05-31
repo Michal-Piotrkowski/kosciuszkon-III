@@ -12,6 +12,11 @@ export const routes: Routes = [
       import('./features/qr-scanner/pages/qr-scanner.routes').then(m => m.QR_ROUTES),
   },
   {
+    path: 'leaderboard',
+    loadChildren: () =>
+      import('./features/leaderboard/pages/leaderboard/leaderboard.routes').then(m => m.LEADERBOARD_ROUTES),
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
