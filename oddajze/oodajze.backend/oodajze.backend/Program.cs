@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ICouponsService, CouponsService>();
 
 
 var app = builder.Build();
