@@ -1,8 +1,13 @@
+
+
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenApi();
-
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=appdatabase.db"));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevClient",

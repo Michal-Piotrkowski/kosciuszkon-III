@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace oodajze.backend.Models;
 
 public class ProductQrData
 {
+    [Key]
     public string ProductId { get; set; }
     public string ProductCode { get; set; }
     public string Name { get; set; }
