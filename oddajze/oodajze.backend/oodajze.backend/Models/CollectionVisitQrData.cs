@@ -14,5 +14,5 @@ public class CollectionVisitQrData
     public int PointsEarned { get; set; }
     public List<ProductQrData> Products { get; set; } = new List<ProductQrData>();
     public CollectionPoint? CollectionPoint { get; set; }
-    public User User { get; set; } 
+    public User? User { get; set; } 
 }

@@ -66,21 +66,51 @@ public class UsersController : ControllerBase
     [HttpPost("redeem")]
     public async Task<int?> RedeemQrCodeAndAddPointsAsync(string qrCode)
     {
-        var visit = await _context.CollectionVisitQrData
-            .Include(c => c.User)
-            .FirstOrDefaultAsync(c => c.QrCode == qrCode);
-
-        if (visit == null)
-            return null;
-
-        visit.User.TotalPoints += visit.PointsEarned;
-        visit.ScannedAt = DateTime.UtcNow;
-        
         var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!int.TryParse(userIdString, out int userId))
+        {
+            throw new InvalidOperationException("Invalid user ID");
+        }
 
-        await _context.SaveChangesAsync();
+        var collectionVisit = await _context.CollectionVisitQrData
+            .FirstOrDefaultAsync(c => c.QrCode == qrCode);
+        
+        if (collectionVisit == null)
+        {
+            return null;
+        }
 
-        return visit.User.TotalPoints;
+        if (collectionVisit.UserId != null)
+        {
+            throw new InvalidOperationException("QR code already redeemed");
+        }
+
+        var currentUser = await _context.Users
+            .Include(u => u.CollectionVisitQrDataHistory)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+        
+        if (currentUser == null)
+        {
+            throw new InvalidOperationException("User not found");
+        }
+
+        collectionVisit.UserId = userId;
+        collectionVisit.User = currentUser;
+    
+        currentUser.TotalPoints += collectionVisit.PointsEarned;
+
+        currentUser.CollectionVisitQrDataHistory ??= new List<CollectionVisitQrData>();
+        currentUser.CollectionVisitQrDataHistory.Add(collectionVisit);
+
+        try
+        {
+            await _context.SaveChangesAsync();
+            return currentUser.TotalPoints;
+        }
+        catch (DbUpdateException ex)
+        {
+            throw new Exception("Failed to save changes");
+        }
     }
 
 
