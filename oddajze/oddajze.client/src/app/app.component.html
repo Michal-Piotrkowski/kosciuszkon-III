@@ -1,11 +1,10 @@
-<h1>Weather Forecast</h1>
+<header>
+  <h1>Oddajże</h1>
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  </nav>
+</header>
 
-<div *ngIf="loading">Loading...</div>
-
-<ul *ngIf="!loading">
-  <li *ngFor="let item of forecasts">
-    <strong>{{ item.date }}</strong> —
-    {{ item.summary }} —
-    {{ item.temperatureC }}°C ({{ item.temperatureF }}°F)
-  </li>
-</ul>
+<main>
+  <router-outlet></router-outlet>
+</main>
