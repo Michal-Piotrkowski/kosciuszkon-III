@@ -11,9 +11,6 @@
 .panels-container {
   display: flex;
   flex-wrap: wrap;
-  margin: -10px;
+  margin: 10px;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 }
