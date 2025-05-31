@@ -116,6 +116,7 @@ public static class MockData
                         ScannedAt = DateTime.Now.AddDays(-3),
                         PointsEarned = 50,
                         CollectionPoint = collectionPoints[0],
+                        QrCode = Guid.NewGuid().ToString(),
                         Products = new List<ProductQrData>
                         {
                             new ProductQrData
@@ -136,6 +137,16 @@ public static class MockData
                                 BatchNumber = "BCH456",
                                 MaterialType = "Elektronika",
                                 RecyclingCode = "4",
+                                Points = 25
+                            },
+                            new ProductQrData
+                            {
+                                ProductCode = "9002490100070",
+                                Name = "RedBull 250ml",
+                                Description = "Napój energetyczny RedBull Energy Drink 250ml",
+                                BatchNumber = "BCH456",
+                                MaterialType = "Metal",
+                                RecyclingCode = "1",
                                 Points = 25
                             }
                         }
@@ -176,6 +187,7 @@ public static class MockData
                         ScannedAt = DateTime.Now.AddDays(-7),
                         PointsEarned = 80,
                         CollectionPoint = collectionPoints[2],
+                        QrCode = Guid.NewGuid().ToString(),
                         Products = new List<ProductQrData>
                         {
                             new ProductQrData

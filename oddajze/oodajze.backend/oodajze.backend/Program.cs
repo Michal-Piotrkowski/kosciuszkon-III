@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=appdatabase.db"));
 builder.Services.AddTransient<MockSeeder>();
@@ -61,6 +62,7 @@ app.UseHttpsRedirection();
 
 
 app.UseRouting();
+app.MapRazorPages();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
