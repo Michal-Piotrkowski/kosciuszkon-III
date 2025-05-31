@@ -1,5 +1,6 @@
 
 
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using oodajze.backend.Data;
 
@@ -20,7 +21,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
-
+builder.Services.AddAuthorization();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -33,7 +34,19 @@ using (var scope = app.Services.CreateScope())
     await seeder.SeedAsync();
 }
 
+app.Use(async (context, next) =>
+{
+    var claims = new[]
+    {
+        new Claim(ClaimTypes.NameIdentifier, "1"),
+        new Claim(ClaimTypes.Email, "mockuser@example.com"),
+        new Claim(ClaimTypes.Name, "Mock User"),
+    };
+    var identity = new ClaimsIdentity(claims, "mock");
+    context.User = new ClaimsPrincipal(identity);
 
+    await next();
+});
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
