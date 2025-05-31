@@ -1,0 +1,62 @@
+#map {
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  margin: 20px auto;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+
+  &.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 90vh;
+    width: 90vw;
+    z-index: 1000;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.close-button {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1001;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+
+  &.visible {
+    display: block;
+    opacity: 1;
+  }
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+:host {
+  display: block;
+  padding: 20px;
+}
+
+::ng-deep .leaflet-popup-content {
+  min-width: 200px;
+  text-align: center;
+}
+
+::ng-deep .leaflet-popup-content button:hover {
+  background-color: #3367d6 !important;
+}

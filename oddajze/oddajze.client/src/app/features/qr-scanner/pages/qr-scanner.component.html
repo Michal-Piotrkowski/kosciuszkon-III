@@ -1,0 +1,24 @@
+<div class="scanner-wrapper">
+    <h2 class="scanner-title">Zeskanuj kod QR</h2>
+    <p class="scanner-description">Umieść kod QR w polu widzenia kamery</p>
+
+    <ng-container *ngIf="scannerEnabled; else noScanner">
+        <zxing-scanner class="scanner-window" [formats]="allowedFormats" (scanSuccess)="onScanSuccess($event)"
+            [attr.data-key]="scannerKey"></zxing-scanner>
+    </ng-container>
+
+    <ng-template #noScanner>
+        <p class="no-scanner-info">Kamera jest wyłączona</p>
+    </ng-template>
+
+    <button class="scanner-toggle" (click)="toggleScanner()" aria-label="Włącz/wyłącz skaner">
+        <span class="material-symbols-outlined">
+            {{ scannerEnabled ? 'close' : 'camera_alt' }}
+        </span>
+    </button>
+
+    @if (qrResult) {
+    <p class="scan-result">Zeskanowany kod: {{ qrResult }}</p>
+    }
+</div>
+  

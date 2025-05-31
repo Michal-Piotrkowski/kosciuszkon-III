@@ -1,0 +1,18 @@
+<div class="burger" (click)="toggleMenu()">
+    <!-- burger-menu icon -->
+    <span>&#9776;</span> 
+</div>
+
+@if (isOpen) {
+    <div class="overlay" (click)="closeMenu()">
+        <div class="menu" (click)="$event.stopPropagation()">
+            <button class="close" (click)="closeMenu()">×</button>
+            <ul>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Zasady</a></li>
+                <li><a href="#">Kontakt</a></li>
+            </ul>
+        </div>
+    </div>
+}
+  
