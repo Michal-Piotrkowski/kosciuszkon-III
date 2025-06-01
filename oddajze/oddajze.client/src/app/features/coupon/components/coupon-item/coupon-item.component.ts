@@ -2,15 +2,16 @@ import { Component, inject, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Coupon } from '../../../../shared/models/coupon.model';
 import { CouponApiService } from '../../../../shared/services/coupon-api.service';
-import { firstValueFrom } from 'rxjs';
+import {firstValueFrom, timer} from 'rxjs';
 import { environment } from '../../../../../environment/environment';
+import { UserPointsService } from '../../../../shared/services/user-points.service'; // dodaj import
 
 @Component({
   selector: 'app-coupon-item',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './coupon-item.component.html',
-  styleUrls: ['./coupon-item.component.scss']
+  styleUrls: ['./coupon-item.component.scss'],
 })
 export class CouponItemComponent {
   private couponApi = inject(CouponApiService);
@@ -24,6 +25,8 @@ export class CouponItemComponent {
     this.expand.update(value => !value);
     this.feedbackMessage.set('');
   }
+
+  private userPointsService = inject(UserPointsService); // dodaj to
 
   async useCoupon(): Promise<void> {
     const coupon = this.coupon();
@@ -40,6 +43,9 @@ export class CouponItemComponent {
       console.log('Moje kupony:', myCoupons);
 
       this.feedbackMessage.set('Kupon pomyślnie użyty!');
+      timer(1000).subscribe(() => {
+        this.userPointsService.refresh();
+      });
     } catch (error: any) {
       console.error('Błąd podczas używania kuponu:', error);
       this.feedbackMessage.set('Coś poszło nie tak, spróbuj ponownie.');
@@ -47,5 +53,5 @@ export class CouponItemComponent {
       this.isLoading.set(false);
     }
   }
-  
+
 }
