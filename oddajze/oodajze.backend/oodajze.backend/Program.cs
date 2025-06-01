@@ -2,6 +2,7 @@
 
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using oodajze.backend.Data;
 using oodajze.backend.Services;
 
@@ -67,8 +68,13 @@ app.UseCors("AllowAngularDevClient");
 
 app.UseHttpsRedirection();
 
-
-
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
+    RequestPath = "/uploads"
+});
 app.UseRouting();
 app.MapRazorPages();
 app.UseAuthorization();
