@@ -1,0 +1,15 @@
+import { Component, input } from '@angular/core';
+
+@Component({
+  selector: 'app-profile-section',
+  imports: [],
+  templateUrl: './profile-section.component.html',
+  styleUrl: './profile-section.component.scss'
+})
+export class ProfileSectionComponent {
+  sectionTitle = input.required();
+  sectionDescription = input();
+  sectionIcon = input.required<string | null>();
+
+  
+}
