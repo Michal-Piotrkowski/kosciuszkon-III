@@ -1,1 +1,51 @@
-<p>profile works!</p>
+<main class="profile-page">
+
+    <section class="profile-header">
+        <div class="avatar"></div>
+        <div class="user-info">
+            <h2 class="nickname">{{user()?.firstName}} {{user()?.lastName}}</h2>
+            <p class="points">Zdobyte punkty: <strong>{{user()?.totalPoints}}</strong></p>
+        </div>
+    </section>
+
+    <!-- Ostatnie zwroty -->
+    <section class="profile-section">
+        <div class="section-header">
+            <span class="material-symbols-outlined">history</span>
+            <div>
+                <h2>Ostatnie zwroty</h2>
+                <p>Twoje ostatnie aktywności i zwroty punktów.</p>
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="item-row return-row" *ngFor="let item of lastReturns(); trackBy: trackByReturn">
+                <img [src]="env.apiUploads + item.imageUrl" alt="{{ item.name }}" class="item-avatar" />
+                <div class="item-info">
+                    <div class="item-name">{{ item.name }}</div>
+                    <div class="item-points">{{ item.points }} punktów</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Moje kupony -->
+    <section class="profile-section">
+        <div class="section-header">
+            <span class="material-symbols-outlined">redeem</span>
+            <div>
+                <h2>Moje kupony</h2>
+                <p>Lista aktualnie posiadanych kuponów.</p>
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="item-row coupon-row" *ngFor="let coupon of userCoupons(); trackBy: trackByCoupon">
+                <div class="item-info">
+                    <div class="item-name">{{ coupon.couponName }}</div>
+                    <div class="item-description">{{ coupon.couponDescription }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+  

@@ -9,10 +9,18 @@ export class ProfileApiService {
   constructor() { }
 
   getLastReturns(){
-    this.http.get('Users/lastReturns');
+    return this.http.get('Users/lastReturns');
   }
 
   getPoints() {
-    this.http.get('Users/me');
+    return this.http.get('Users/me');
+  }
+
+  getMeCoupons() {
+    return this.http.get('Users/me/coupons');
+  }
+
+  getMe(){
+    return this.http.get('Users/me');
   }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace oodajze.backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250601040728_AddSth")]
+    [Migration("20250601072351_AddSth")]
     partial class AddSth
     {
         /// <inheritdoc />
@@ -127,6 +127,9 @@ namespace oodajze.backend.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MaterialType")
