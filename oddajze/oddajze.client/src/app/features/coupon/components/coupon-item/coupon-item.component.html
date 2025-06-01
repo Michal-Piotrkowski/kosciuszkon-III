@@ -1,6 +1,6 @@
 <div class="coupon-card" [class.expanded]="expand()">
     <div class="coupon-header" (click)="toggleExpand()" role="button" tabindex="0" [attr.aria-expanded]="expand()">
-        <img class="logo" [src]="coupon()?.imageUrl" alt="Logo firmy" />
+        <img class="logo" [src]="url + coupon()?.imageUrl" alt="Logo firmy" />
 
         <div class="coupon-description">
             <h3>{{ coupon()?.title }}</h3>

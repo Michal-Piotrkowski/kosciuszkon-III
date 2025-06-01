@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Coupon } from '../../../../shared/models/coupon.model';
 import { CouponApiService } from '../../../../shared/services/coupon-api.service';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../../../environment/environment';
 
 @Component({
   selector: 'app-coupon-item',
@@ -13,6 +14,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class CouponItemComponent {
   private couponApi = inject(CouponApiService);
+  url = environment.apiUploads;
   coupon = input<Coupon | null>(null);
 
   expand = signal(false);

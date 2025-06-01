@@ -1,0 +1,36 @@
+@import '../../../../shared/styles/colors.scss';
+
+.coupons-wrapper {
+    padding: 16px;
+    background-color: $background-color;
+    min-height: 100vh;
+
+    .coupons-header {
+        margin-bottom: 12px;
+        text-align: center;
+
+        h2 {
+            font-size: 1.4rem;
+            color: $primary-text-color;
+            font-weight: 600;
+            margin: 0;
+            padding: 8px 0;
+        }
+    }
+
+    .coupons-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .coupons-wrapper {
+        padding: 12px;
+
+        .coupons-header h2 {
+            font-size: 1.2rem;
+        }
+    }
+}

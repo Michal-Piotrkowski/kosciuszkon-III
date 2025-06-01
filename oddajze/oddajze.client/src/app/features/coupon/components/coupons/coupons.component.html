@@ -1,5 +1,10 @@
 <section class="coupons-wrapper">
-    <h2>Dostępne kupony</h2>
-    <app-coupon-item *ngFor="let coupon of coupons()" [coupon]="coupon"/>
+    <header class="coupons-header">
+        <h2>Dostępne kupony</h2>
+    </header>
+
+    <div class="coupons-list">
+        <app-coupon-item *ngFor="let coupon of coupons()" [coupon]="coupon" />
+    </div>
 </section>
   
