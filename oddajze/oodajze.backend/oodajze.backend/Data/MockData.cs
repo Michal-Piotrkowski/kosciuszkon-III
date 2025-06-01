@@ -39,6 +39,62 @@ public static class MockData
                 Address = "ul. Nadmorska 10, Gdańsk",
                 Latitude = 54.3520,
                 Longitude = 18.6466
+            },
+            new CollectionPoint
+            {
+                Name = "Eko Punkt Kraków-Kazimierz",
+                Description = "Zbiórka odpadów segregowanych i elektrośmieci",
+                Address = "ul. Józefa 12, Kraków",
+                Latitude = 50.0514,
+                Longitude = 19.9458
+            },
+            new CollectionPoint
+            {
+                Name = "Centrum Recyklingu Kraków-Podgórze",
+                Description = "Przyjmujemy szkło, plastik i metale",
+                Address = "ul. Wielicka 28, Kraków",
+                Latitude = 50.0409,
+                Longitude = 19.9602
+            },
+            new CollectionPoint
+            {
+                Name = "Zielony Punkt Nowa Huta",
+                Description = "Zbiórka odpadów komunalnych i niebezpiecznych",
+                Address = "os. Centrum A 1, Kraków",
+                Latitude = 50.0721,
+                Longitude = 20.0375
+            },
+            new CollectionPoint
+            {
+                Name = "Eko Strefa Kraków-Bieżanów",
+                Description = "Punkt selektywnej zbiórki odpadów",
+                Address = "ul. Bieżanowska 204, Kraków",
+                Latitude = 50.0167,
+                Longitude = 20.0449
+            },
+            new CollectionPoint
+            {
+                Name = "Recykling Centrum Krowodrza",
+                Description = "Przyjmujemy elektroodpady i opakowania",
+                Address = "ul. Łobzowska 25, Kraków",
+                Latitude = 50.0659,
+                Longitude = 19.9267
+            },
+            new CollectionPoint
+            {
+                Name = "PSZOK Kraków-Łagiewniki",
+                Description = "Punkt Selektywnej Zbiórki Odpadów Komunalnych",
+                Address = "ul. Zakopiańska 3, Kraków",
+                Latitude = 50.0211,
+                Longitude = 19.9379
+            },
+            new CollectionPoint
+            {
+                Name = "Eko Dzielnica Bronowice",
+                Description = "Zbiórka surowców wtórnych",
+                Address = "ul. Balicka 30, Kraków",
+                Latitude = 50.0869,
+                Longitude = 19.8936
             }
         };
     }
