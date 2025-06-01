@@ -1,0 +1,169 @@
+@page
+@model oodajze.backend.Pages.Scan.ScanModel
+@{
+    ViewData["Title"] = "Zeskanuj swoje pojemniki!";
+    Layout = "_Layout";
+}
+
+<h2 class="mb-4">Zeskanuj swoje pojemniki!</h2>
+<div class="mb-3 text-center">
+    <div style="max-width: 640px; margin: 0 auto;">
+        <video id="video" class="border rounded" style="width: 100%; height: auto;" autoplay playsinline></video>
+    </div>
+</div>
+
+<h3>Zeskanowane kody:</h3>
+<ul id="barcodeList" class="list-group mb-3"></ul>
+
+<button id="stopBtn" class="btn btn-primary">Zakończ skanowanie</button>
+<form method="post" id="scanForm">
+    @Html.AntiForgeryToken()
+</form>
+@section Scripts {
+    <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+    <script>
+        let scannedBarcodes = [];
+        let scannerInitialized = false;
+
+        function startScanner() {
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+        
+                    const videoElement = document.getElementById('video');
+                    videoElement.srcObject = stream;
+
+                    Quagga.init({
+                        inputStream: {
+                            name: "Live",
+                            type: "LiveStream",
+                            target: videoElement,
+                            constraints: {
+                                width: 640,
+                                height: 480,
+                                facingMode: "environment" 
+                            },
+                        },
+                        decoder: {
+                            readers: ["ean_reader"] 
+                        },
+                        locate: true,
+                        debug: {
+                            drawBoundingBox: true,
+                            showFrequency: true,
+                            drawScanline: true,
+                            showPattern: true
+                        }
+                    }, function(err) {
+                        if (err) {
+                            console.error("Błąd inicjalizacji Quagga:", err);
+                            alert("Nie można zainicjować skanera: " + err.message);
+                            return;
+                        }
+                        console.log("Quagga zainicjalizowana pomyślnie");
+                        Quagga.start();
+                        scannerInitialized = true;
+                    });
+
+                    Quagga.onDetected(function(data) {
+                        const code = data.codeResult.code;
+                   
+                        if (/^\d{13}$/.test(code)) {
+                            if (!scannedBarcodes.includes(code)) {
+                                scannedBarcodes.push(code);
+                                const list = document.getElementById('barcodeList');
+                                const li = document.createElement('li');
+                                li.textContent = code;
+                                li.classList.add('list-group-item');
+                                list.appendChild(li);
+
+                                beep();
+                            }
+                        } else {
+          
+                            console.warn("Nieprawidłowy kod EAN-13:", code);
+                            errorBeep();
+                        }
+                    });
+                })
+                .catch(function(err) {
+                    console.error("Błąd dostępu do kamery:", err);
+                    alert("Nie można uzyskać dostępu do kamery. Upewnij się, że udzieliłeś odpowiednich uprawnień.");
+                });
+        }
+        
+        function beep() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = "sine";
+            oscillator.frequency.value = 800;
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function errorBeep() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = "sine";
+            oscillator.frequency.value = 400;
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+
+        document.getElementById('stopBtn').addEventListener('click', function() {
+            if (scannerInitialized) {
+                Quagga.stop();
+                const videoElement = document.getElementById('video');
+                if (videoElement.srcObject) {
+                    videoElement.srcObject.getTracks().forEach(track => track.stop());
+                }
+            }
+
+            const invalidCodes = scannedBarcodes.filter(code => !/^\d{13}$/.test(code));
+            if (invalidCodes.length > 0) {
+                alert("Znaleziono nieprawidłowe kody. Proszę usunąć następujące kody:\n" + invalidCodes.join("\n"));
+                return;
+            }
+
+            const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+
+            if (!tokenElement) {
+                console.error("Element tokena CSRF nie został znaleziony!");
+                alert("Wystąpił błąd zabezpieczeń. Odśwież stronę i spróbuj ponownie.");
+                return;
+            }
+
+            const csrfToken = tokenElement.value;
+
+            fetch('?handler=Scan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken
+                },
+                body: JSON.stringify({ Barcodes: scannedBarcodes })
+            })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else if (!response.ok) {
+                        throw new Error('Błąd serwera: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.redirectUrl) {
+                        window.location.href = data.redirectUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error("Błąd:", error);
+                    alert("Wystąpił błąd: " + error.message);
+                });
+        });
+
+        document.addEventListener('DOMContentLoaded', startScanner);
+    </script>
+}

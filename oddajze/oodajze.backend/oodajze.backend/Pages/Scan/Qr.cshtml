@@ -1,0 +1,53 @@
+@page "{qrId}"
+@model ScanQrModel
+
+@{
+    ViewData["Title"] = "Twój kod QR";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2 class="mb-4">Pomyślnie oddano pojemniki!</h2>
+            
+            @if (!string.IsNullOrEmpty(Model.QrCodeSvg))
+            {
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center mb-3">
+                            @Html.Raw(Model.QrCodeSvg)
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle-fill"></i> Zeskanuj kod. Punkty zostaną dodane do twojego konta.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Nie znaleziono kodu QR.
+                </div>
+            }
+            
+            <a href="/" class="btn btn-primary mt-3">
+                <i class="bi bi-arrow-left"></i> Powrót do strony głównej
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
