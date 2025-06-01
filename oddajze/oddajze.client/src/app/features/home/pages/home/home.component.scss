@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :host {
-  display: block;
+  display: flex;
   font-family: 'Roboto', sans-serif;
   background-color: $background-color;
   color: $secondary-text-color;
@@ -10,6 +10,9 @@
   padding-bottom: 120px;
   box-sizing: border-box;
   min-height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .welcome-container {
@@ -25,6 +28,7 @@
 
 .panels-container {
   display: flex;
+  width: 80%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -36,7 +40,7 @@
     border-radius: 12px;
     padding: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    min-width: 40%;
   }
 }
 
