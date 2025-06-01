@@ -1,11 +1,109 @@
 @import '../../../../shared/styles/colors.scss';
 
 .leaderboard-title-panel {
-  width: 100%;
-  margin: 20px auto;
-  height: 10%;
+  width: calc(100% - 40px);
+  margin: 20px;
+  padding: 24px;
+  background-color: white;
   border-radius: 12px;
   text-align: center;
-  font-size: 20px;
-  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: $primary-text-color;
+  }
+}
+
+.leaderboard-container {
+  width: calc(100% - 40px);
+  min-height: calc(80vh - 160px); // zmniejszona wysokość z 75vh na 65vh
+  background-color: white;
+  margin: 20px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px; // dodany margines dolny
+
+  .leaderboard-header {
+    text-align: center;
+    margin-bottom: 24px;
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: $primary-text-color;
+      margin: 0 0 8px 0;
+    }
+
+    .leaderboard-subtitle {
+      color: $secondary-text-color;
+      font-size: 16px;
+    }
+  }
+}
+
+.leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  .header {
+    color: $secondary-text-color;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+
+    .position {
+      width: 50px;
+    }
+
+    .username {
+      flex: 1;
+      text-align: left;
+      margin-left: 20px; // odstęp od numeru pozycji
+      font-weight: bold;
+    }
+
+    .points {
+      margin-left: auto; // przesunie punkty na prawą stronę
+      min-width: 80px; // minimalna szerokość dla punktów
+      text-align: right;
+    }
+  }
+
+  .leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background-color: #f3f3f3;
+    font-weight: 500;
+
+    .position {
+      width: 50px;
+      font-weight: bold;
+
+      &.gold {
+        color: #deba01;
+      }
+      &.silver {
+        color: #C0C0C0;
+      }
+      &.bronze {
+        color: #CD7F32;
+      }
+    }
+
+    .username {
+      flex: 1;
+      text-align: left;
+    }
+
+    .points {
+      font-weight: bold;
+    }
+  }
 }

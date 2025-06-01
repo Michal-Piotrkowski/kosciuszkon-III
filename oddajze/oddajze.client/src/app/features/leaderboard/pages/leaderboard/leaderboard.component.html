@@ -1,5 +1,23 @@
-<app-small-panel class="leaderboard-title-panel"
-  titleLabel="EkoLiga">
-</app-small-panel>
-<app-small-panel class="leaderboard-scores">
-</app-small-panel>
+<div class="leaderboard-title-panel">
+  <h1>EkoLiga</h1>
+</div>
+
+<div class="leaderboard-container">
+
+  <ul class="leaderboard-list">
+    <li class="leaderboard-item header">
+      <span class="position">Miejsce</span>
+      <span class="username">Gracz</span>
+      <span class="points">Punkty</span>
+    <li class="leaderboard-item" *ngFor="let user of ranking; let i = index">
+      <span class="position" [ngClass]="{
+        'gold': i === 0,
+        'silver': i === 1,
+        'bronze': i === 2
+      }">#{{ i + 1 }}</span>
+      <span class="username">{{ user.username }}</span>
+      <span class="points">{{ user.totalPoints }} pkt</span>
+    </li>
+  </ul>
+
+</div>
