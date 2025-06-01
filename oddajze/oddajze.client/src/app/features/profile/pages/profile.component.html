@@ -1,7 +1,7 @@
 <main class="profile-page">
 
     <section class="profile-header">
-        <div class="avatar"></div>
+        <div class="avatar"><img [src]="env.apiUploads + 'avatar.png'" alt="account avatar"></div>
         <div class="user-info">
             <h2 class="nickname">{{user()?.firstName}} {{user()?.lastName}}</h2>
             <p class="points">Zdobyte punkty: <strong>{{user()?.totalPoints}}</strong></p>

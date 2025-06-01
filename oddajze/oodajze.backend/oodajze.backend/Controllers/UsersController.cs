@@ -59,32 +59,55 @@ public class UsersController : ControllerBase
     [HttpGet("lastReturns")]
     public async Task<IActionResult> GetLastReturns()
     {
- 
         var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (!int.TryParse(userIdString, out int userId))
         {
+            Console.WriteLine($"[WARN] Nieprawidłowe ID użytkownika: {userIdString}");
             return BadRequest("Nieprawidłowe ID użytkownika");
         }
 
-   
+        Console.WriteLine($"[INFO] Pobieranie ostatnich wizyt dla użytkownika ID: {userId}");
+
         var lastVisits = await _context.CollectionVisitQrData
             .Where(cv => cv.UserId == userId)
             .OrderByDescending(cv => cv.ScannedAt)
             .Take(10)
-            .Include(cv => cv.Products) 
+            .Include(cv => cv.Products)
             .ToListAsync();
 
-      
-        var lastProducts = lastVisits
-            .SelectMany(cv => cv.Products)
-            .Select(p => new 
+        Console.WriteLine($"[INFO] Znaleziono {lastVisits.Count} wizyt");
+
+        foreach (var visit in lastVisits)
+        {
+            Console.WriteLine($"[INFO] Wizyta ID: {visit.Id}, Data: {visit.ScannedAt}, Liczba produktów: {visit.Products?.Count ?? 0}");
+
+            if (visit.Products != null)
             {
+                foreach (var product in visit.Products)
+                {
+                    Console.WriteLine($"[INFO]  - Produkt: ID={product.Id}, Name={product.Name}, Points={product.Points}, ImageUrl={product.ImageUrl}");
+                }
+            }
+        }
+
+        var lastProducts = lastVisits
+            .SelectMany(cv => cv.Products.Select(p => new 
+            {
+                p.Id,
                 p.Name,
                 p.Points,
-                p.ImageUrl
-            })
-            .Take(10) 
+                p.ImageUrl,
+                VisitDate = cv.ScannedAt
+            }))
+            .Take(10)
             .ToList();
+
+        Console.WriteLine($"[INFO] Łącznie produktów do zwrócenia: {lastProducts.Count}");
+
+        foreach (var p in lastProducts)
+        {
+            Console.WriteLine($"[INFO] Zwracany produkt: ID={p.Id}, Name={p.Name}, Points={p.Points}, VisitDate={p.VisitDate}");
+        }
 
         return Ok(lastProducts);
     }

@@ -136,7 +136,7 @@ public static class MockData
                 CouponStore = "ZeroWasteStore",
                 Description = "Kupon rabatowy na zakupy w sklepie zero waste",
                 PointsRequired = 120,
-                ImageUrl = "zerowawastestore.png",
+                ImageUrl = "zerowastestore.png",
                 Available = true
             }
         };
