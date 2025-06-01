@@ -73,9 +73,14 @@ export class MapComponent implements AfterViewInit, OnInit {
       popupAnchor: [0, -32]
     });
 
-    this.map = L.map('map').setView([50.0619, 19.9368], 12);
+    this.map = L.map('map', {
+      zoomControl: false
+    }).setView([50.0619, 19.9368], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(this.map);
+    L.control.zoom({
+      position: 'bottomleft'
     }).addTo(this.map);
 
 
