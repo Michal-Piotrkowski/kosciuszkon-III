@@ -125,22 +125,35 @@ public static class MockData
                         {
                             new ProductQrData
                             {
-                                ProductCode = "PLAST123",
-                                Name = "Butelka PET",
-                                Description = "Plastikowa butelka 1.5L",
+                                ProductCode = "5904988309597",
+                                Name = "Dzik Peach 500ml",
+                                Description = "Napój energetyczny Dzik Peach 500ml Bez cukru",
                                 BatchNumber = "BCH123",
-                                MaterialType = "Plastik",
+                                MaterialType = "Metal",
                                 RecyclingCode = "1",
-                                Points = 25
+                                ImageUrl = "dzik.png",
+                                Points = 20
                             },
                             new ProductQrData
                             {
-                                ProductCode = "ELEC456",
-                                Name = "Stary telefon",
-                                Description = "Zepsuty telefon komórkowy",
+                                ProductCode = "5449000034519",
+                                Name = "Coca cola 850ml",
+                                Description = "Napój Coca Cola 850ml",
+                                BatchNumber = "BCH123",
+                                MaterialType = "Plastik",
+                                RecyclingCode = "2",
+                                ImageUrl = "cola.png",
+                                Points = 10
+                            },
+                            new ProductQrData
+                            {
+                                ProductCode = "5902854104772",
+                                Name = "Bepower 250ml",
+                                Description = "Napój energetyczny Bepower Energy Drink 250ml",
                                 BatchNumber = "BCH456",
-                                MaterialType = "Elektronika",
-                                RecyclingCode = "4",
+                                MaterialType = "Metal",
+                                RecyclingCode = "1",
+                                ImageUrl = "bepower.png",
                                 Points = 25
                             },
                             new ProductQrData
@@ -150,8 +163,9 @@ public static class MockData
                                 Description = "Napój energetyczny RedBull Energy Drink 250ml",
                                 BatchNumber = "BCH456",
                                 MaterialType = "Metal",
+                                ImageUrl = "redbull.png",
                                 RecyclingCode = "1",
-                                Points = 25
+                                Points = 50
                             }
                         }
                     }
