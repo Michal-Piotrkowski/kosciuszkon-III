@@ -135,6 +135,7 @@ namespace oodajze.backend.Migrations
                     BatchNumber = table.Column<string>(type: "TEXT", nullable: false),
                     MaterialType = table.Column<string>(type: "TEXT", nullable: false),
                     RecyclingCode = table.Column<string>(type: "TEXT", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     Points = table.Column<int>(type: "INTEGER", nullable: false),
                     CollectionVisitQrDataId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
