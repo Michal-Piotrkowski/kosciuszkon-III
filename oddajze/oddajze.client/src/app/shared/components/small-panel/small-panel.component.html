@@ -1,1 +1,20 @@
-<div class="small-panel"></div>
+<div class="small-panel">
+    @if (titleLabel) {
+        <div class="panel-header">
+            @if (iconClass) {
+                <i [class]="iconClass"></i>
+            }
+            <h3>{{ titleLabel }}</h3>
+        </div>
+    }
+
+    @if (text) {
+        <div class="panel-content">
+            <p>{{ text }}</p>
+        </div>
+    }
+
+    @if (buttonText) {
+        <button class="panel-button">{{ buttonText }}</button>
+    }
+</div>
