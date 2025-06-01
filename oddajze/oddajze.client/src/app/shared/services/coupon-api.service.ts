@@ -15,10 +15,12 @@ export class CouponApiService {
   }
 
   useCoupon(couponId: number) {
-    return this.http.postSpecial('coupons/redeem', { couponId });
-  }
+    console.log(`Using coupon with ID: ${JSON.stringify({ couponTemplateId: couponId })}`);
+  
+    return this.http.postSpecial('coupons/redeem', { couponTemplateId: couponId });
+  }  
 
   getMyCoupons() {
-    return this.http.getSpecial('Users/me/coupons');
+    return this.http.get('Users/me/coupons');
   }
 }
