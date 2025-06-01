@@ -14,7 +14,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   private environmentInjector = inject(EnvironmentInjector);
 
   points: CollectionPoint[] = [];
-
+  private map: any;
   constructor(private collectionPointService: CollectionPointService) {}
 
   ngOnInit() {
@@ -23,7 +23,11 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.points = data;
         this.points.forEach(point => {
           console.log(`Punkt: lat=${point.latitude}, lng=${point.longitude}, opis=${point.description}`);
+
         });
+        if (this.map) { // jeśli mapa jest już zainicjalizowana
+          this.addMarkers(); // dodaj markery
+        }
       },
       error: (error) => console.error('Błąd podczas pobierania punktów:', error)
     });
@@ -69,15 +73,31 @@ export class MapComponent implements AfterViewInit, OnInit {
       popupAnchor: [0, -32]
     });
 
-    const map = L.map('map').setView([50.0619, 19.9368], 12);
+    this.map = L.map('map').setView([50.0619, 19.9368], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
+    }).addTo(this.map);
+
+
+    if (this.points.length > 0) { // jeśli punkty już są pobrane
+      this.addMarkers();
+    }
+
+  }
+
+  private addMarkers(): void {
+    const L = (window as any).L;
+    const myIcon = L.icon({
+      iconUrl: 'assets/marker.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
 
     this.points.forEach(punkt => {
       const popupContent = this.createPopupContent(punkt);
       L.marker([punkt.latitude, punkt.longitude], {icon: myIcon})
-        .addTo(map)
+        .addTo(this.map)
         .bindPopup(popupContent);
     });
   }
