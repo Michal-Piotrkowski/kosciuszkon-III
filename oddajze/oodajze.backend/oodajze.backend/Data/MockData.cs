@@ -50,6 +50,7 @@ public static class MockData
             new CouponTemplate
             {
                 Title = "10% zniżki na zakupy w EkoSklep",
+                CouponStore = "EkoSklep",
                 Description = "Kupon na zniżkę do wykorzystania w EkoSklep",
                 PointsRequired = 100,
                 ImageUrl = "https://example.com/coupon1.png",
@@ -58,6 +59,7 @@ public static class MockData
             new CouponTemplate
             {
                 Title = "Darmowa torba materiałowa",
+                CouponStore = "Torby.pl",
                 Description = "Wymień punkty na torbę eko!",
                 PointsRequired = 50,
                 ImageUrl = "https://example.com/coupon2.png",
@@ -66,6 +68,7 @@ public static class MockData
             new CouponTemplate
             {
                 Title = "Bezpłatny bilet do kina ekologicznego",
+                CouponStore = "EkoKino",
                 Description = "Wykorzystaj punkty na bilet do kina promującego ekologię",
                 PointsRequired = 150,
                 ImageUrl = "https://example.com/coupon3.png",
@@ -74,6 +77,7 @@ public static class MockData
             new CouponTemplate
             {
                 Title = "Zniżka 20 zł na zakupy w sklepie zero waste",
+                CouponStore = "ZeroWasteStore",
                 Description = "Kupon rabatowy na zakupy w sklepie zero waste",
                 PointsRequired = 120,
                 ImageUrl = "https://example.com/coupon4.png",
