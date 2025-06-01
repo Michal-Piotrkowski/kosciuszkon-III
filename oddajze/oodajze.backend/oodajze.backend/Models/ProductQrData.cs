@@ -12,5 +12,6 @@ public class ProductQrData
     public string BatchNumber { get; set; }
     public string MaterialType { get; set; }
     public string RecyclingCode { get; set; }
+    public string? ImageUrl { get; set; }
     public int Points { get; set; }
 }
