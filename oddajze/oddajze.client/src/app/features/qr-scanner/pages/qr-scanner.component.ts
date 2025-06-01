@@ -19,12 +19,26 @@ export class QrScannerComponent {
   allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX /*, ...*/ ];
   scannerKey = 0;
   
-  onScanSuccess($event: string) {
-    this.qrApi.postQrCode($event).subscribe((response) => {
+ onScanSuccess($event: string) {
+  if (!this.scannerEnabled) return;
+
+  this.qrApi.postQrCode($event).subscribe({
+    next: (response) => {
+      alert('✅ Kod zeskanowany pomyślnie!');
       this.qrResult = response.data;
-      console.log('QR Code scanned successfully:', this.qrResult);
-    });
-  }
+      this.toggleScanner();
+    },
+    error: (error) => {
+      if (error.status === 400 || error.status === 500) {
+        alert('❌ Ten kod został już użyty.');
+      } else {
+        alert('⚠️ Wystąpił nieoczekiwany błąd.');
+      }
+      this.toggleScanner();
+    }
+  });
+}
+
 
   toggleScanner() {
     this.scannerEnabled = !this.scannerEnabled;
