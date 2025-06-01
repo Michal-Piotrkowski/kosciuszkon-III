@@ -9,7 +9,8 @@ import {User} from "../../models/user.models";
   selector: 'app-header',
   imports: [BurgerMenuComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  providers: [HttpService]
 })
 export class HeaderComponent implements OnInit {
 

@@ -22,6 +22,11 @@ export const routes: Routes = [
     import('./features/coupon/pages/coupon.route').then(m => m.COUPON_ROUTES),
   },
   {
+    path: 'profile',
+    loadChildren: () =>
+    import('./features/profile/pages/profile.routes').then(m => m.PROFILE_ROUTES),
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
