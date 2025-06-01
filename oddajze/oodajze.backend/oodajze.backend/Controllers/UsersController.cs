@@ -55,7 +55,39 @@ public class UsersController : ControllerBase
 
         return Ok(coupons);
     }
+    
+    [HttpGet("lastReturns")]
+    public async Task<IActionResult> GetLastReturns()
+    {
+ 
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!int.TryParse(userIdString, out int userId))
+        {
+            return BadRequest("Nieprawidłowe ID użytkownika");
+        }
 
+   
+        var lastVisits = await _context.CollectionVisitQrData
+            .Where(cv => cv.UserId == userId)
+            .OrderByDescending(cv => cv.ScannedAt)
+            .Take(10)
+            .Include(cv => cv.Products) 
+            .ToListAsync();
+
+      
+        var lastProducts = lastVisits
+            .SelectMany(cv => cv.Products)
+            .Select(p => new 
+            {
+                p.Name,
+                p.Points,
+                p.ImageUrl
+            })
+            .Take(10) 
+            .ToList();
+
+        return Ok(lastProducts);
+    }
     [HttpGet("ranking")]
     public IActionResult GetTopCollectors()
     {
