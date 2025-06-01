@@ -8,7 +8,6 @@ import {NgClass, NgForOf} from '@angular/common';
 @Component({
   selector: 'app-leaderboard',
   imports: [
-    SmallPanelComponent,
     NgForOf,
     NgClass,
   ],
