@@ -1,1 +1,5 @@
-<p>coupons works!</p>
+<section class="coupons-wrapper">
+    <h2>Dostępne kupony</h2>
+    <app-coupon-item *ngFor="let coupon of coupons()" [coupon]="coupon"/>
+</section>
+  

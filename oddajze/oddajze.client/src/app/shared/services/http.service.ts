@@ -18,8 +18,26 @@ export class HttpService {
     return this.http.get(`${this.apiUrl}/${endpoint}`, options);
   }
 
+  getSpecial(endpoint: string, options?: any): Observable<any> {
+    return this.http.get(`${environment.apiUrlSpecial}${endpoint}`, options).pipe(
+      catchError(error => {
+        console.error('Error occurred:', error);
+        return throwError('Something went wrong!');
+      })
+    );
+  }
+
   post(endpoint: string, data: any, options?: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/${endpoint}`, data, options).pipe(
+      catchError(error => {
+        console.error('Error occurred:', error);
+        return throwError('Something went wrong!');
+      })
+    );
+  }
+
+  postSpecial(endpoint: string, data: any, options?: any): Observable<any> {
+    return this.http.post(`${environment.apiUrlSpecial}${endpoint}`, data, options).pipe(
       catchError(error => {
         console.error('Error occurred:', error);
         return throwError('Something went wrong!');
