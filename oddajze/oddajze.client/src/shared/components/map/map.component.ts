@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, createComponent, EnvironmentInjector, inject, OnInit} from '@angular/core';
+import {Component, AfterViewInit, createComponent, EnvironmentInjector, inject, OnInit, Input} from '@angular/core';
 import {MapPopupComponent} from '../map-popup/map-popup.component';
 import {CollectionPoint} from "../../../app/shared/models/collection-point.model";
 import {CollectionPointService} from "../../../app/shared/services/collection-point.service";
@@ -12,6 +12,7 @@ import {CollectionPointService} from "../../../app/shared/services/collection-po
 })
 export class MapComponent implements AfterViewInit, OnInit {
   private environmentInjector = inject(EnvironmentInjector);
+  @Input() postalCode: string | null = null;
 
   points: CollectionPoint[] = [];
   private map: any;
@@ -119,6 +120,36 @@ export class MapComponent implements AfterViewInit, OnInit {
     componentRef.changeDetectorRef.detectChanges();
 
     return componentRef.location.nativeElement;
+  }
+
+
+  ngOnChanges() {
+    if (this.postalCode) {
+      // tutaj możesz odpalić zoom lub inne akcje na mapie
+      this.zoomToPostalCode(this.postalCode);
+    }
+  }
+
+  async zoomToPostalCode(kod: string) {
+    if (!kod) return;
+    const url = `https://nominatim.openstreetmap.org/search?format=json&country=Poland&postalcode=${encodeURIComponent(kod)}&limit=1`;
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Accept-Language': 'pl'  // żądanie po polsku
+        }
+      });
+      const data = await response.json();
+      if (data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        this.map.setView([lat, lon], 12); // zoom na 14, możesz zmienić
+      } else {
+        console.warn('Nie znaleziono lokalizacji dla tego kodu pocztowego');
+      }
+    } catch (error) {
+      console.error('Błąd podczas pobierania lokalizacji:', error);
+    }
   }
 
 }

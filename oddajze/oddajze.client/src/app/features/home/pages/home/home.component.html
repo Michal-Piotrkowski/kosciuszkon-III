@@ -3,10 +3,28 @@
 </div>
 
 <div class="map-section">
-  <app-map></app-map>
+  <h2 class="map-title">Znajdz automat</h2>
+  <app-map [postalCode]="postalCode"></app-map>
+  <div class="postal-search">
+    <form (submit)="searchLocation($event)" class="search-form">
+      <input
+        type="text"
+        autocomplete="off"
+        placeholder="Kod pocztowy"
+        [(ngModel)]="postalCode"
+        name="postal"
+        class="postal-input"
+        maxlength="6">
+      <button type="submit" class="search-button">
+        <i class="fas fa-search"></i>
+        Szukaj w okolicy
+      </button>
+    </form>
+  </div>
 </div>
 
 <div class="panels-container">
-  <app-small-panel></app-small-panel>
+  <app-small-panel>
+  </app-small-panel>
   <app-small-panel></app-small-panel>
 </div>
