@@ -12,9 +12,14 @@ export const routes: Routes = [
       import('./features/qr-scanner/pages/qr-scanner.routes').then(m => m.QR_ROUTES),
   },
   {
+    path: 'leaderboard',
+    loadChildren: () =>
+    import('./features/leaderboard/pages/leaderboard/leaderboard.routes').then(m => m.LEADERBOARD_ROUTES)
+  },
+  {
     path: 'coupon',
     loadChildren: () =>
-      import('./features/coupon/pages/coupon.route').then(m => m.COUPON_ROUTES),
+    import('./features/coupon/pages/coupon.route').then(m => m.COUPON_ROUTES),
   },
   {
     path: '**',

@@ -1,16 +1,74 @@
-.welcome-container {
-  margin: 20px;
+@import '../../../../shared/styles/colors.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:host {
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  background-color: $background-color;
+  color: $secondary-text-color;
+  padding: 16px;
+  padding-bottom: 120px;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 
-.welcome-text {
-  font-size: 26px;
-  font-weight: bold;
-  color: #333;
+.welcome-container {
+  margin-bottom: 24px;
+  text-align: center;
+
+  .welcome-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: $primary-text-color;
+  }
 }
 
 .panels-container {
   display: flex;
-  flex-wrap: wrap;
-  margin: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
 
+  app-small-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+}
+
+// MAPA
+.map-section {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .panels-container {
+    flex-direction: row;
+    justify-content: center;
+
+    app-small-panel {
+      flex: 1 1 300px;
+      max-width: 400px;
+    }
+  }
+
+  .welcome-container .welcome-text {
+    font-size: 32px;
+  }
+
+  .map-section {
+    max-width: 1000px;
+  }
 }
